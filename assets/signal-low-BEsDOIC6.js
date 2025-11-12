@@ -1,0 +1,1 @@
+import{c as o}from"./createLucideIcon-D5QjKJNS.js";import"./index-BFcM9PhW.js";const a=[["path",{d:"M2 20h.01",key:"4haj6o"}],["path",{d:"M7 20v-4",key:"j294jx"}]],c=o("signal-low",a);export{a as __iconNode,c as default};
