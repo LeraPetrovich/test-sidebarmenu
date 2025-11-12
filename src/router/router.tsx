@@ -1,6 +1,19 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import App from "../app/App";
-import { MainPage } from "../pages";
+import { createBrowserRouter } from "react-router-dom";
+import { App } from "../app/App";
+import {
+  MainPage,
+  ListPage,
+  NotificationPage,
+  OrdersPage,
+  ProductsPage,
+  ReviewsPage,
+  ShopPage,
+  SuppliesPage,
+  TasksPage,
+  TicketsPage,
+  TrendsPage,
+  NotFoundPage,
+} from "../pages";
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +24,17 @@ export const router = createBrowserRouter([
         path: "",
         element: <MainPage />,
       },
-      { path: "*", element: <Navigate to="/" replace /> },
+      { path: "trends", element: <TrendsPage /> },
+      { path: "tasks", element: <TasksPage /> },
+      { path: "tickets", element: <TicketsPage /> },
+      { path: "products", element: <ProductsPage /> },
+      { path: "orders", element: <OrdersPage /> },
+      { path: "supplies", element: <SuppliesPage /> },
+      { path: "list", element: <ListPage /> },
+      { path: "reviews", element: <ReviewsPage /> },
+      { path: "notification", element: <NotificationPage /> },
+      { path: "shop", element: <ShopPage /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
 ]);

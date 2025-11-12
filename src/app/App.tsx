@@ -1,5 +1,7 @@
-function App() {
-  return <div></div>;
-}
+import { type FC } from "react";
+import { MainLayout } from "../layouts";
 
-export default App;
+//оставила app, т к в других случая тут можно было бы расширить логику и использовать другие провайдеры например
+export const App: FC = () => {
+  return <MainLayout />;
+};

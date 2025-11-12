@@ -1,1 +1,12 @@
 export { MainPage } from "./MainPage";
+export { TrendsPage } from "./TrendsPage";
+export { TicketsPage } from "./TicketsPage";
+export { TasksPage } from "./TasksPage";
+export { SuppliesPage } from "./SuppliesPage";
+export { ShopPage } from "./ShopPage";
+export { ReviewsPage } from "./ReviewsPage";
+export { ProductsPage } from "./ProductsPage";
+export { OrdersPage } from "./OrdersPage";
+export { NotificationPage } from "./NotificationPage";
+export { ListPage } from "./ListPage";
+export { NotFoundPage } from "./NotFoundPage";
