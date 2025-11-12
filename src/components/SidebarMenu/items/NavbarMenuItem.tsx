@@ -25,9 +25,11 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
       <div
         className={[
           "cursor-pointer h-full p-2 flex flex-col items-center justify-center gap-1 text-black hover:text-sky-700 hover:[&_svg]:stroke-sky-700",
-          isActiveParent ? "" : "",
+          isActiveParent
+            ? "text-sky-700 [&_svg]:stroke-sky-700"
+            : "text-black [&_svg]:stroke-black",
         ].join(" ")}
-        onClick={() => data.children && openPanel(data.children)}
+        onClick={() => data.children && openPanel(data.children, data.title)}
       >
         <DynamicIcon name={data.icon as any} size={20} color="black" />
         <span>{data.title}</span>

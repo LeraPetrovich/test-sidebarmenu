@@ -11,7 +11,8 @@ import type { MenuItemType } from "../configs/types";
 interface HelpPanelContextProps {
   isOpen: boolean;
   selectedItem: Array<MenuItemType> | null;
-  openPanel: (dataRoute: Array<MenuItemType>) => void;
+  selectedTitle: string | null;
+  openPanel: (dataRoute: Array<MenuItemType>, selectedTitle?: string) => void;
   closePanel: () => void;
 }
 
@@ -21,11 +22,16 @@ export const HelpPanelContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<Array<MenuItemType> | null>(
     null
   );
 
-  const openPanel = (dataRoute: Array<MenuItemType>) => {
+  const openPanel = (dataRoute: Array<MenuItemType>, title?: string) => {
+    if (title) {
+      setSelectedTitle(title);
+    }
+
     setSelectedItem(dataRoute);
     setIsOpen(true);
   };
@@ -33,11 +39,12 @@ export const HelpPanelContextProvider: FC<{ children: ReactNode }> = ({
   const closePanel = () => {
     setIsOpen(false);
     setSelectedItem(null);
+    setSelectedTitle(null);
   };
 
   return (
     <HelpPanelContext.Provider
-      value={{ isOpen, selectedItem, openPanel, closePanel }}
+      value={{ isOpen, selectedItem, openPanel, closePanel, selectedTitle }}
     >
       {children}
     </HelpPanelContext.Provider>

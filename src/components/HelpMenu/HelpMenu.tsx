@@ -4,7 +4,8 @@ import { SidebarMenuItem } from "../SidebarMenu/items";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 export const HelpMenu: FC = () => {
-  const { isOpen, closePanel, selectedItem } = useHelpPanelMenu();
+  const { isOpen, closePanel, selectedItem, selectedTitle } =
+    useHelpPanelMenu();
 
   return (
     <div
@@ -14,14 +15,27 @@ export const HelpMenu: FC = () => {
       ].join(" ")}
     >
       <div className="w-full h-full relative">
-        <div className="absolute h-[50px] top-0 left-0 w-full flex items-center justify-end p-2 bg-white">
-          <DynamicIcon
-            onClick={() => closePanel()}
-            name="x"
-            size={20}
-            color="black"
-            className="cursor-pointer"
-          />
+        <div className="z-[99999] bg-slate-200 absolute h-[50px] top-0 left-0 w-full flex items-center gap-2 flex-wrap justify-between p-2">
+          <div>
+            {selectedTitle && (
+              <p className="text-slate-500 text-xl font-medium">
+                {selectedTitle}
+              </p>
+            )}
+          </div>
+          <button
+            className="p-1 border-0 flex items-center justify-center"
+            onClick={() => {
+              closePanel();
+            }}
+          >
+            <DynamicIcon
+              name="x"
+              size={20}
+              color="black"
+              className="cursor-pointer"
+            />
+          </button>
         </div>
         <div className="pt-[50px] flex flex-col gap-2 relative">
           {selectedItem &&
