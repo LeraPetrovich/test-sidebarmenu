@@ -26,7 +26,7 @@ export const SidebarMenu = () => {
           })}
         </div>
         {isTrueWidth && (
-          <div className="border-t-1 border-slate-200 pt-2">
+          <div className="w-full border-t-1 border-slate-200 pt-2">
             <button
               onClick={() => setOpen((open) => !open)}
               className="flex items-center gap-2 p-[5px] rounded-lg transition-colors w-max text-left hover:bg-zinc-200 text-black"
