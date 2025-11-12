@@ -1,0 +1,1 @@
+import{c as o}from"./createLucideIcon-EilxjSYB.js";import"./index-CukziSMV.js";const t=[["polygon",{points:"12 2 19 21 12 17 5 21 12 2",key:"x8c0qg"}]],a=o("navigation-2",t);export{t as __iconNode,a as default};
