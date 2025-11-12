@@ -89,12 +89,14 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
     <NavLink
       to={data.path}
       className={[
-        "flex items-center  rounded-lg transition-colors w-full text-left",
+        "relative flex items-center  rounded-lg transition-colors w-full text-left",
         isActiveParent
           ? "bg-sky-100 text-sky-700 [&_svg]:stroke-sky-700"
           : "hover:bg-zinc-200 text-black",
         data.icon !== null && data.icon !== undefined ? "pr-4" : "px-3 py-1",
       ].join(" ")}
+      onMouseEnter={() => !isOpen && setIsHovered(true)}
+      onMouseLeave={() => !isOpen && setIsHovered(false)}
     >
       {data.icon && (
         <div className="p-[5px] rounded-lg transition-colors w-max text-left">
@@ -102,6 +104,11 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
         </div>
       )}
       {isOpen && <span>{data.title}</span>}
+      {!isOpen && isHovered && (
+        <div className="absolute font-bold p-1 bg-sky-700 text-white text-sm max-w-20 rounded-md z-[999] absolute top-0 left-full ml-0 mb-2">
+          {data.title}
+        </div>
+      )}
     </NavLink>
   );
 };
