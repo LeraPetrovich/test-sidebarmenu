@@ -1,6 +1,6 @@
 import { type FC, useState, useMemo, useEffect, memo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import type { MenuItemType } from "../../configs/types";
+import type { MenuItemType } from "../../../configs/types";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
@@ -27,7 +27,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
   if (data.children?.length) {
     return (
       <div
-        className="relative"
+        className="relative w-full"
         onMouseEnter={() => !isOpen && setIsHovered(true)}
         onMouseLeave={() => !isOpen && setIsHovered(false)}
       >
