@@ -3,11 +3,14 @@ import { useHelpPanelMenu } from "../../contexts/HelpPanelContext";
 import { SidebarMenuItem } from "../SidebarMenu/items";
 import { DynamicIcon } from "lucide-react/dynamic";
 
+//панель которая доступная везде и упаравляется через контекст из хука useHelpPanelMenu
+
 export const HelpMenu: FC = () => {
   const { isOpen, closePanel, selectedItem, selectedTitle } =
     useHelpPanelMenu();
   const panelRef = useRef<HTMLDivElement | null>(null);
 
+  //тут проверка или клик был не по компоненту меню чтобы можно было закрыть его
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -47,6 +50,8 @@ export const HelpMenu: FC = () => {
               closePanel();
             }}
           >
+            {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
+            если бы делала свои иконки то исопользовала vite-plugin-icons */}
             <DynamicIcon
               name="x"
               size={20}
@@ -55,6 +60,7 @@ export const HelpMenu: FC = () => {
             />
           </button>
         </div>
+        {/* переиспользую компонент SidebarMenuItem который был изначально настроен и имеет логику открытия item для дальнейшего расширения */}
         <div className="pt-[60px] flex flex-col gap-0 relative">
           {selectedItem &&
             selectedItem.map((item) => {

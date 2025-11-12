@@ -31,6 +31,8 @@ export const SidebarMenu = () => {
               onClick={() => setOpen((open) => !open)}
               className="flex items-center gap-2 p-[5px] rounded-lg transition-colors w-max text-left hover:bg-zinc-200 text-black"
             >
+              {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
+            если бы делала свои иконки то исопользовала vite-plugin-icons */}
               <DynamicIcon
                 name={open ? "arrow-left-from-line" : "arrow-right-from-line"}
                 size={20}

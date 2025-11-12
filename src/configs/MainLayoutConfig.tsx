@@ -1,5 +1,6 @@
 import { type MenuItemType } from "./types";
 
+//конфигурация для отрисовки структуры меню
 export const mainLayoutConfig: Array<MenuItemType> = [
   {
     path: "/",

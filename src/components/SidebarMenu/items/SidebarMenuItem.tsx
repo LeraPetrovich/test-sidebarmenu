@@ -3,6 +3,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import type { MenuItemType } from "../../../configs/types";
 import { DynamicIcon } from "lucide-react/dynamic";
 
+//использовала рекурсионную отрисовку items для воможности расширять компонент
+
 const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
   data,
   isOpen,
@@ -11,6 +13,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
 
+  //проверка или активе родитель по его дочерним если они есть
   const isActiveParent = useMemo(() => {
     return (
       !!data.children?.some((child) => location.pathname === child.path) ||
@@ -18,12 +21,14 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
     );
   }, [location.pathname, data]);
 
+  //динамически закрываем меню если в нем нет дочерних активных элементов
   useEffect(() => {
     if (!isActiveParent && isOpenDropdown && isOpen) {
       setIsOpenDropdown(false);
     }
   }, [isActiveParent, isOpen]);
 
+  //отрисовала два состояния чтобы правильно использвоать NavLink
   if (data.children?.length) {
     return (
       <div
@@ -45,6 +50,8 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
               : "px-3 py-1",
           ].join(" ")}
         >
+          {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
+            если бы делала свои иконки то исопользовала vite-plugin-icons */}
           {data.icon && (
             <div className="p-[5px] rounded-lg transition-colors w-max text-left">
               <DynamicIcon name={data.icon as any} size={20} color="black" />
@@ -60,6 +67,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
           )}
         </button>
 
+        {/* рекурсионная отрисовка */}
         {isOpenDropdown && isOpen && (
           <div className="ml-6 mt-1 flex flex-col gap-1">
             {data.children.map((child) => (
@@ -85,6 +93,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
     );
   }
 
+  //классичкская ссылка без дочерних элементов
   return (
     <NavLink
       to={data.path}

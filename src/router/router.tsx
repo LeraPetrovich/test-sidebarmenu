@@ -15,6 +15,8 @@ import {
   NotFoundPage,
 } from "../pages";
 
+//конфигурация доступных страниц
+
 export const router = createBrowserRouter([
   {
     path: "/",

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+//хук для отслеживания ширины экрана чтобы перебирать NavBarMenuItem и SidebarMenu item
+//нужен для того чтобы убирать и добавлять элементы из дом дерева
+
 export const useCheckPageSize = (widthPageInRem: number = 40) => {
   const [isTrueWidth, setIsTrueWidth] = useState<boolean>(false);
 
