@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { mainLayoutConfig } from "../../configs";
 import { SidebarMenuItem } from "../SidebarMenuItem";
 import { DynamicIcon } from "lucide-react/dynamic";
@@ -9,7 +9,7 @@ export const SidebarMenu = () => {
   return (
     <div
       className={[
-        "transition-all duration-300 bg-slate-100 border-r-[1.5px] border-slate-200 text-white h-screen overflow-scroll",
+        "transition-all duration-300 bg-slate-100 border-r-[1.5px] border-slate-200 text-white h-screen",
         open ? "w-64" : "w-16",
       ].join(" ")}
     >

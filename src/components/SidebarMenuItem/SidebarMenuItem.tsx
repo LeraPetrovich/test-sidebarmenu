@@ -8,6 +8,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
   isOpen,
 }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
 
   const isActiveParent = useMemo(() => {
@@ -15,7 +16,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
       !!data.children?.some((child) => location.pathname === child.path) ||
       location.pathname === data.path
     );
-  }, [location.pathname]);
+  }, [location.pathname, data]);
 
   useEffect(() => {
     if (!isActiveParent && isOpenDropdown && isOpen) {
@@ -25,7 +26,11 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
 
   if (data.children?.length) {
     return (
-      <div className="flex flex-col">
+      <div
+        className="relative"
+        onMouseEnter={() => !isOpen && setIsHovered(true)}
+        onMouseLeave={() => !isOpen && setIsHovered(false)}
+      >
         <button
           onClick={() => {
             if (isOpen) setIsOpenDropdown((open) => !open);
@@ -59,6 +64,20 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
           <div className="ml-6 mt-1 flex flex-col gap-1">
             {data.children.map((child) => (
               <SidebarMenuItem isOpen={isOpen} key={child.path} data={child} />
+            ))}
+          </div>
+        )}
+        {!isOpen && isHovered && (
+          <div
+            className="flex flex-col gap-1 z-[999] absolute top-0 left-full ml-0 bg-white shadow-lg rounded-lg border border-slate-200 p-2 z-50 min-w-[180px]"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <div className="font-semibold text-gray-500 px-2 mb-1">
+              {data.title}
+            </div>
+            {data.children.map((child) => (
+              <SidebarMenuItem key={child.path} isOpen={true} data={child} />
             ))}
           </div>
         )}
