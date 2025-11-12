@@ -1,9 +1,12 @@
 import { type FC, useMemo, memo } from "react";
 import { DynamicIcon } from "lucide-react/dynamic";
+import { NavLink, useLocation } from "react-router-dom";
 
 import type { MenuItemType } from "../../../configs/types";
 
 const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
+  const location = useLocation();
+
   const isActiveParent = useMemo(() => {
     return (
       !!data.children?.some((child) => location.pathname === child.path) ||
@@ -11,16 +14,33 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
     );
   }, [location.pathname, data]);
 
+  if (data?.children?.length) {
+    return (
+      <div
+        className={[
+          "cursor-pointer h-full p-2 flex flex-col items-center justify-center gap-1 text-black hover:text-sky-700 hover:[&_svg]:stroke-sky-700",
+          isActiveParent ? "" : "",
+        ].join(" ")}
+      >
+        <DynamicIcon name={data.icon as any} size={20} color="black" />
+        <span>{data.title}</span>
+      </div>
+    );
+  }
+
   return (
-    <div
+    <NavLink
+      to={data.path}
       className={[
-        "h-full p-2 d-flex flex-col items-centre justify-center gap-1",
-        isActiveParent ? "" : "",
+        "cursor-pointer h-full p-2 flex flex-col items-center justify-center gap-1 hover:text-sky-700 hover:[&_svg]:stroke-sky-700",
+        isActiveParent
+          ? "text-sky-700 [&_svg]:stroke-sky-700"
+          : "text-black [&_svg]:stroke-black",
       ].join(" ")}
     >
-      <DynamicIcon name={data.icon as any} size={30} color="black" />
+      <DynamicIcon name={data.icon as any} size={20} color="black" />
       <span>{data.title}</span>
-    </div>
+    </NavLink>
   );
 };
 

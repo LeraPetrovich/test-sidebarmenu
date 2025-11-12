@@ -11,7 +11,7 @@ export const SidebarMenu = () => {
   return (
     <div
       className={[
-        "sm:order-1 order-2 transition-all duration-300 bg-slate-100 border-r-[1.5px] border-slate-200 text-white sm:h-screen h-100px",
+        "sm:order-1 order-2 transition-all duration-300 bg-slate-100 border-r-[1.5px] border-slate-200 text-white sm:h-screen h-100px sm:overflow-x-visible overflow-x-scroll",
         isTrueWidth ? (open ? "w-64" : "w-16") : "w-full",
       ].join(" ")}
     >
