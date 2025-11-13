@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
-import { type MenuItemType } from "../../../types/types";
+import { type MenuItemType } from "../../../types/menu";
 
 export const buildMenuTreeData = (routes: RouteObject[]): MenuItemType[] => {
   const items: Record<string, MenuItemType> = {};

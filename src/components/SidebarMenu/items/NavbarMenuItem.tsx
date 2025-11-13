@@ -4,7 +4,7 @@ import { useSidebarMenuContext } from "../context/SidebarMenuContext";
 
 import { DynamicIcon } from "lucide-react/dynamic";
 
-import type { MenuItemWithState } from "../../../types/types";
+import type { MenuItemWithState } from "../../../types/menu";
 
 //отрислвала navBarMenu отдельно чтобы не переполнять логику sidebarMenuItem и при этом смогла переиспользовать SidebarMenuItem в helppanelMenu
 

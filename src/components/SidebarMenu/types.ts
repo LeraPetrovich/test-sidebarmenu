@@ -1,4 +1,4 @@
-import { type MenuItemWithState } from "../../types/types";
+import { type MenuItemWithState } from "../../types/menu";
 
 interface SidebarMenuProps {
   menuTree: MenuItemWithState[];

@@ -1,5 +1,5 @@
 import { createContext, useContext, type FC, type ReactNode } from "react";
-import type { MenuItemWithState } from "../../../types/types";
+import type { MenuItemWithState } from "../../../types/menu";
 
 type SidebarMenuContextType = {
   onItemClick: (item: MenuItemWithState) => void;

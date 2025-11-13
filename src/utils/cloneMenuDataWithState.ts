@@ -1,4 +1,4 @@
-import type { MenuItemType, MenuItemWithState } from "../types/types";
+import type { MenuItemType, MenuItemWithState } from "../types/menu";
 
 export const cloneMenuDataWithState = (
   menu: Array<MenuItemType>

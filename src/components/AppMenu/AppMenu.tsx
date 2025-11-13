@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { SidebarMenu } from "../SidebarMenu";
 
-import type { MenuItemWithState } from "../../types/types";
+import type { MenuItemWithState } from "../../types/menu";
 
 export const AppMenu: FC = () => {
   const routes = router.routes[0].children ?? [];
