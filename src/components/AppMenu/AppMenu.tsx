@@ -33,7 +33,6 @@ export const AppMenu: FC<{ menuTree: MenuItemType[] }> = ({ menuTree }) => {
   }, [location.pathname]);
 
   const handleItemClick = (clickedItem: MenuItemWithState) => {
-    console.log(clickedItem);
     const toggleItem = (items: MenuItemWithState[]): MenuItemWithState[] => {
       return items.map((item) => {
         const hasActiveChild = item.children?.some(
