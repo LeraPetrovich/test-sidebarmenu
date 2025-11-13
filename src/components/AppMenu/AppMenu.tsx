@@ -1,12 +1,16 @@
 import { type FC, useState, useEffect } from "react";
+import { router } from "../../router/router";
+import { buildMenuTreeData } from "./utils/buildMenuTreeData";
 import { cloneMenuDataWithState } from "../../utils/cloneMenuDataWithState";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { SidebarMenu } from "../SidebarMenu";
 
-import type { MenuItemType, MenuItemWithState } from "../../types/types";
+import type { MenuItemWithState } from "../../types/types";
 
-export const AppMenu: FC<{ menuTree: MenuItemType[] }> = ({ menuTree }) => {
+export const AppMenu: FC = () => {
+  const routes = router.routes[0].children ?? [];
+  const menuTree = buildMenuTreeData(routes);
   const navigate = useNavigate();
   const location = useLocation();
 
