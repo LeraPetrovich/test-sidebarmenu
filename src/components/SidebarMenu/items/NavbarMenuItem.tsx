@@ -1,22 +1,16 @@
-import { type FC, useMemo, memo } from "react";
+import { type FC, memo } from "react";
 import { useHelpPanelMenu } from "../../../contexts/HelpPanelContext";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { NavLink, useLocation } from "react-router-dom";
 
-import type { MenuItemType } from "../../../types/types";
+import type { MenuItemWithState } from "../../../types/types";
 
 //отрислвала navBarMenu отдельно чтобы не переполнять логику sidebarMenuItem и при этом смогла переиспользовать SidebarMenuItem в helppanelMenu
 
-const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
-  const location = useLocation();
+const MemoNavBarMenu: FC<{
+  data: MenuItemWithState;
+  onItemClick: (item: MenuItemWithState) => void;
+}> = ({ data, onItemClick }) => {
   const { openPanel } = useHelpPanelMenu();
-
-  const isActiveParent = useMemo(() => {
-    return (
-      !!data.children?.some((child) => location.pathname === child.path) ||
-      location.pathname === data.path
-    );
-  }, [location.pathname, data]);
 
   if (
     data.children !== null &&
@@ -27,7 +21,7 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
       <div
         className={[
           "cursor-pointer h-full p-2 flex flex-col items-center justify-center gap-1 text-black hover:text-sky-700 hover:[&_svg]:stroke-sky-700",
-          isActiveParent
+          data.isActive
             ? "text-sky-700 [&_svg]:stroke-sky-700"
             : "text-black [&_svg]:stroke-black",
         ].join(" ")}
@@ -42,11 +36,11 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
   }
 
   return (
-    <NavLink
-      to={data.path}
+    <div
+      onClick={() => onItemClick(data)}
       className={[
         "cursor-pointer h-full p-2 flex flex-col items-center justify-center gap-1 hover:text-sky-700 hover:[&_svg]:stroke-sky-700",
-        isActiveParent
+        data.isActive
           ? "text-sky-700 [&_svg]:stroke-sky-700"
           : "text-black [&_svg]:stroke-black",
       ].join(" ")}
@@ -57,7 +51,7 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
         <DynamicIcon name={data.icon as any} size={20} color="black" />
       )}
       <span>{data.title}</span>
-    </NavLink>
+    </div>
   );
 };
 

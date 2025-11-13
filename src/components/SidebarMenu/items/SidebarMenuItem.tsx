@@ -1,32 +1,33 @@
-import { type FC, useState, useMemo, useEffect, memo } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import type { MenuItemType } from "../../../types/types";
+import { type FC, useState, memo } from "react";
+
 import { DynamicIcon } from "lucide-react/dynamic";
+
+import type { SidebarMenuItemProps } from "./types";
 
 //использовала рекурсионную отрисовку items для воможности расширять компонент
 
-const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
+const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
   data,
   isOpen,
+  onItemClick,
 }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const location = useLocation();
 
   //проверка или активе родитель по его дочерним если они есть
-  const isActiveParent = useMemo(() => {
-    return (
-      !!data.children?.some((child) => location.pathname === child.path) ||
-      location.pathname === data.path
-    );
-  }, [location.pathname, data]);
+  // const isActiveParent = useMemo(() => {
+  //   return (
+  //     !!data.children?.some((child) => location.pathname === child.path) ||
+  //     location.pathname === data.path
+  //   );
+  // }, [location.pathname, data]);
 
   //динамически закрываем меню если в нем нет дочерних активных элементов
-  useEffect(() => {
-    if (!isActiveParent && isOpenDropdown && isOpen) {
-      setIsOpenDropdown(false);
-    }
-  }, [isActiveParent, isOpen]);
+  // useEffect(() => {
+  //   if (!isActiveParent && isOpenDropdown && isOpen) {
+  //     setIsOpenDropdown(false);
+  //   }
+  // }, [isActiveParent, isOpen]);
 
   //отрисовала два состояния чтобы правильно использвоать NavLink
   if (data.children?.length) {
@@ -42,7 +43,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
           }}
           className={[
             "cursor-pointer flex items-center rounded-lg transition-colors w-full text-left",
-            isActiveParent
+            data.isActive
               ? "text-sky-700 [&_svg]:stroke-sky-700 hover:bg-zinc-200"
               : "hover:bg-zinc-200 text-black",
             data.icon !== null && data.icon !== undefined
@@ -71,7 +72,12 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
         {isOpenDropdown && isOpen && (
           <div className="ml-6 mt-1 flex flex-col gap-1">
             {data.children.map((child) => (
-              <SidebarMenuItem isOpen={isOpen} key={child.path} data={child} />
+              <SidebarMenuItem
+                onItemClick={onItemClick}
+                isOpen={isOpen}
+                key={child.path}
+                data={child}
+              />
             ))}
           </div>
         )}
@@ -85,7 +91,12 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
               {data.title}
             </div>
             {data.children.map((child) => (
-              <SidebarMenuItem key={child.path} isOpen={true} data={child} />
+              <SidebarMenuItem
+                onItemClick={onItemClick}
+                key={child.path}
+                isOpen={true}
+                data={child}
+              />
             ))}
           </div>
         )}
@@ -95,11 +106,11 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
 
   //классичкская ссылка без дочерних элементов
   return (
-    <NavLink
-      to={data.path}
+    <div
+      onClick={() => onItemClick(data)}
       className={[
         "relative flex items-center  rounded-lg transition-colors w-full text-left",
-        isActiveParent
+        data.isActive
           ? "bg-sky-100 text-sky-700 [&_svg]:stroke-sky-700"
           : "hover:bg-zinc-200 text-black",
         data.icon !== null && data.icon !== undefined ? "pr-4" : "px-3 py-1",
@@ -120,7 +131,7 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
           {data.title}
         </div>
       )}
-    </NavLink>
+    </div>
   );
 };
 

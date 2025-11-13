@@ -6,4 +6,13 @@ type MenuItemType = {
   children?: MenuItemType[];
 };
 
-export type { MenuItemType };
+type MenuItemWithState = {
+  path: string;
+  icon?: string;
+  title: string;
+  id: string;
+  isActive: boolean;
+  children?: MenuItemWithState[];
+};
+
+export type { MenuItemType, MenuItemWithState };

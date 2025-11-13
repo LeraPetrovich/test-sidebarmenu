@@ -3,9 +3,13 @@ import { useHelpPanelMenu } from "../../contexts/HelpPanelContext";
 import { SidebarMenuItem } from "../SidebarMenu/items";
 import { DynamicIcon } from "lucide-react/dynamic";
 
+import type { MenuItemWithState } from "../../types/types";
+
 //панель которая доступная везде и упаравляется через контекст из хука useHelpPanelMenu
 
-export const HelpMenu: FC = () => {
+export const HelpMenu: FC<{
+  onItemClick: (item: MenuItemWithState) => void;
+}> = ({ onItemClick }) => {
   const { isOpen, closePanel, selectedItem, selectedTitle } =
     useHelpPanelMenu();
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -65,7 +69,12 @@ export const HelpMenu: FC = () => {
           {selectedItem &&
             selectedItem.map((item) => {
               return (
-                <SidebarMenuItem isOpen={true} key={item.path} data={item} />
+                <SidebarMenuItem
+                  onItemClick={onItemClick}
+                  isOpen={true}
+                  key={item.path}
+                  data={item}
+                />
               );
             })}
         </div>

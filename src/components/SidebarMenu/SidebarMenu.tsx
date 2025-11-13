@@ -5,9 +5,12 @@ import { HelpPanelContextProvider } from "../../contexts/HelpPanelContext";
 import { HelpMenu } from "../HelpMenu";
 import { SidebarMenuItem, NavBarMenu } from "./items";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { type MenuItemType } from "../../types/types";
+import type { SidebarMenuProps } from "./types";
 
-export const SidebarMenu: FC<{ menuTree: MenuItemType[] }> = ({ menuTree }) => {
+export const SidebarMenu: FC<SidebarMenuProps> = ({
+  menuTree,
+  onItemClick,
+}) => {
   const [open, setOpen] = useState(true);
   const { isTrueWidth } = useCheckPageSize();
 
@@ -23,9 +26,18 @@ export const SidebarMenu: FC<{ menuTree: MenuItemType[] }> = ({ menuTree }) => {
           <div className="flex w-full sm:items-start sm:justify-start items-center justify-between sm:flex-col sm:gap-2">
             {menuTree.map((item) => {
               return isTrueWidth ? (
-                <SidebarMenuItem key={item.path} isOpen={open} data={item} />
+                <SidebarMenuItem
+                  key={item.path}
+                  isOpen={open}
+                  data={item}
+                  onItemClick={onItemClick}
+                />
               ) : (
-                <NavBarMenu key={item.path} data={item} />
+                <NavBarMenu
+                  onItemClick={onItemClick}
+                  key={item.path}
+                  data={item}
+                />
               );
             })}
           </div>
@@ -47,7 +59,7 @@ export const SidebarMenu: FC<{ menuTree: MenuItemType[] }> = ({ menuTree }) => {
           )}
         </div>
       </div>
-      <HelpMenu />
+      <HelpMenu onItemClick={onItemClick} />
     </HelpPanelContextProvider>
   );
 };
