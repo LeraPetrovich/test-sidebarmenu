@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { App } from "../app/App";
+import { MainLayout } from "../layouts";
 import {
   MainPage,
   ListPage,
@@ -18,7 +18,7 @@ import {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <MainLayout />,
     children: [
       {
         index: true,

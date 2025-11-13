@@ -1,21 +1,21 @@
 import { type FC } from "react";
-import { Outlet } from "react-router-dom";
-import { HelpMenu } from "../components";
-import { SidebarMenu } from "../components";
-import { HelpPanelContextProvider } from "../contexts/HelpPanelContext";
 
-//удобный layout чтобы отрисовывать сменные страницы и не дублировать меню sidebar
+import { buildMenuTreeData } from "../utils/buildMenuTreeData";
+import { router } from "../router/router";
+
+import { Outlet } from "react-router-dom";
+import { AppMenu } from "../components";
 
 export const MainLayout: FC = () => {
+  const routes = router.routes[0].children ?? [];
+  const menuTree = buildMenuTreeData(routes);
+
   return (
-    <HelpPanelContextProvider>
-      <div className="flex w-full h-full sm:flex-row flex-col">
-        <SidebarMenu />
-        <div className="flex-1 bg-white transition-all duration-300 flex flex-col sm:order-2 order-1">
-          <Outlet />
-        </div>
-        <HelpMenu />
+    <div className="flex w-full h-full sm:flex-row flex-col">
+      <AppMenu menuTree={menuTree} />
+      <div className="flex-1 bg-white transition-all duration-300 flex flex-col sm:order-2 order-1">
+        <Outlet />
       </div>
-    </HelpPanelContextProvider>
+    </div>
   );
 };
