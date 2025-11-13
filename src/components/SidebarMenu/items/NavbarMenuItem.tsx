@@ -14,6 +14,12 @@ const MemoNavBarMenu: FC<{
   const { openPanel } = useHelpPanelMenu();
   const { onItemClick } = useSidebarMenuContext();
 
+  const handleOpenPanel = (data: MenuItemWithState) => {
+    if (data.children && data.children.length) {
+      openPanel(data.id, data.title);
+    }
+  };
+
   if (
     data.children !== null &&
     data.children !== undefined &&
@@ -27,7 +33,7 @@ const MemoNavBarMenu: FC<{
             ? "text-sky-700 [&_svg]:stroke-sky-700"
             : "text-black [&_svg]:stroke-black",
         ].join(" ")}
-        onClick={() => data.children && openPanel(data.children, data.title)}
+        onClick={() => handleOpenPanel(data)}
       >
         {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
             если бы делала свои иконки то исопользовала vite-plugin-icons */}

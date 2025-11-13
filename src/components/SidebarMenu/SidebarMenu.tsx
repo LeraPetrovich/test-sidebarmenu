@@ -26,11 +26,15 @@ export const SidebarMenu: FC<SidebarMenuProps> = ({
         >
           <div className="flex sm:flex-col sm:items-start items-center sm:px-4 sm:gap-2 sm:py-5">
             <div className="flex w-full sm:items-start sm:justify-start items-center justify-between sm:flex-col sm:gap-2">
-              {menuTree.map((item) => {
+              {menuTree.map((item, index) => {
                 return isTrueWidth ? (
-                  <SidebarMenuItem key={item.path} isOpen={open} data={item} />
+                  <SidebarMenuItem
+                    key={`${index}_%${item.path}`}
+                    isOpenSidebarMenu={open}
+                    data={item}
+                  />
                 ) : (
-                  <NavBarMenu key={item.path} data={item} />
+                  <NavBarMenu key={`${index}_%${item.path}`} data={item} />
                 );
               })}
             </div>
@@ -54,7 +58,7 @@ export const SidebarMenu: FC<SidebarMenuProps> = ({
             )}
           </div>
         </div>
-        <HelpMenu />
+        <HelpMenu menuItems={menuTree} />
       </HelpPanelContextProvider>
     </SidebarMenuContextProvider>
   );

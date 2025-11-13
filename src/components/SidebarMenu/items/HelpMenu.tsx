@@ -1,16 +1,16 @@
-import { type FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef, useMemo, memo } from "react";
 import { useHelpPanelMenu } from "../context/HelpPanelContext";
 import { SidebarMenuItem } from ".";
 import { DynamicIcon } from "lucide-react/dynamic";
+import type { MenuItemWithState } from "../../../types/menu";
 
-//панель которая доступная везде и упаравляется через контекст из хука useHelpPanelMenu
-
-export const HelpMenu: FC = () => {
+const MemoHelpMenu: FC<{ menuItems: MenuItemWithState[] }> = ({
+  menuItems,
+}) => {
   const { isOpen, closePanel, selectedItem, selectedTitle } =
     useHelpPanelMenu();
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  //тут проверка или клик был не по компоненту меню чтобы можно было закрыть его
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -27,6 +27,22 @@ export const HelpMenu: FC = () => {
     };
   }, [isOpen, closePanel]);
 
+  const menuMap = useMemo(() => {
+    const map = new Map<string, MenuItemWithState>();
+
+    const traverse = (items: MenuItemWithState[]) => {
+      for (const item of items) {
+        map.set(item.id, item);
+        if (item.children?.length) traverse(item.children);
+      }
+    };
+
+    traverse(menuItems);
+    return map;
+  }, [menuItems]);
+
+  const currentData = selectedItem ? menuMap.get(selectedItem) : null;
+
   return (
     <div
       className={[
@@ -37,21 +53,15 @@ export const HelpMenu: FC = () => {
     >
       <div className="w-full h-full relative">
         <div className="z-[99999] bg-slate-200 absolute h-[50px] top-0 left-0 w-full flex items-center gap-2 flex-wrap justify-between p-2">
-          <div>
-            {selectedTitle && (
-              <p className="text-slate-500 text-xl font-medium">
-                {selectedTitle}
-              </p>
-            )}
-          </div>
+          {selectedTitle && (
+            <p className="text-slate-500 text-xl font-medium">
+              {selectedTitle}
+            </p>
+          )}
           <button
             className="p-1 border-0 flex items-center justify-center"
-            onClick={() => {
-              closePanel();
-            }}
+            onClick={closePanel}
           >
-            {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
-            если бы делала свои иконки то исопользовала vite-plugin-icons */}
             <DynamicIcon
               name="x"
               size={20}
@@ -60,16 +70,19 @@ export const HelpMenu: FC = () => {
             />
           </button>
         </div>
-        {/* переиспользую компонент SidebarMenuItem который был изначально настроен и имеет логику открытия item для дальнейшего расширения */}
+
         <div className="pt-[60px] flex flex-col gap-0 relative">
-          {selectedItem &&
-            selectedItem.map((item) => {
-              return (
-                <SidebarMenuItem isOpen={true} key={item.path} data={item} />
-              );
-            })}
+          {currentData?.children?.map((item, index) => (
+            <SidebarMenuItem
+              isOpenSidebarMenu={true}
+              key={`${index}_${currentData.id}_${item.id}`}
+              data={item}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+export const HelpMenu = memo(MemoHelpMenu);
