@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useCheckPageSize } from "../../hooks/useCheckPageSize";
-import { mainLayoutConfig } from "../../configs";
+import { buildMenuTreeData } from "../../utils/buildMenuTreeData";
+import { router } from "../../router/router";
+
 import { SidebarMenuItem, NavBarMenu } from "./items";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 export const SidebarMenu = () => {
   const [open, setOpen] = useState(true);
   const { isTrueWidth } = useCheckPageSize();
+
+  const routes = router.routes[0].children ?? [];
+  const menuTree = buildMenuTreeData(routes);
+  console.log(menuTree);
 
   return (
     <div
@@ -17,7 +23,7 @@ export const SidebarMenu = () => {
     >
       <div className="flex sm:flex-col sm:items-start items-center sm:px-4 sm:gap-2 sm:py-5">
         <div className="flex w-full sm:items-start sm:justify-start items-center justify-between sm:flex-col sm:gap-2">
-          {mainLayoutConfig.map((item) => {
+          {menuTree.map((item) => {
             return isTrueWidth ? (
               <SidebarMenuItem key={item.path} isOpen={open} data={item} />
             ) : (

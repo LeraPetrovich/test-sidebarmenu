@@ -1,6 +1,6 @@
 import { type FC, useState, useMemo, useEffect, memo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import type { MenuItemType } from "../../../configs/types";
+import type { MenuItemType } from "../../../types/types";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 //использовала рекурсионную отрисовку items для воможности расширять компонент
@@ -109,7 +109,9 @@ const MemoSidebarMenuItem: FC<{ data: MenuItemType; isOpen: boolean }> = ({
     >
       {data.icon && (
         <div className="p-[5px] rounded-lg transition-colors w-max text-left">
-          <DynamicIcon name={data.icon as any} size={20} color="black" />
+          {data.icon && (
+            <DynamicIcon name={data.icon as any} size={20} color="black" />
+          )}
         </div>
       )}
       {isOpen && <span>{data.title}</span>}

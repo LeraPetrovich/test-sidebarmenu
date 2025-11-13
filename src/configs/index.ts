@@ -1,1 +1,0 @@
-export { mainLayoutConfig } from "./MainLayoutConfig";

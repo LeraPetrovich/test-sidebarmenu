@@ -3,7 +3,7 @@ import { useHelpPanelMenu } from "../../../contexts/HelpPanelContext";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { NavLink, useLocation } from "react-router-dom";
 
-import type { MenuItemType } from "../../../configs/types";
+import type { MenuItemType } from "../../../types/types";
 
 //отрислвала navBarMenu отдельно чтобы не переполнять логику sidebarMenuItem и при этом смогла переиспользовать SidebarMenuItem в helppanelMenu
 
@@ -53,7 +53,9 @@ const MemoNavBarMenu: FC<{ data: MenuItemType }> = ({ data }) => {
     >
       {/* использвовала иконки уже готовые для скорости выполнеия т к собирать список своих иконок было бы достаточно затратно по времени
             если бы делала свои иконки то исопользовала vite-plugin-icons */}
-      <DynamicIcon name={data.icon as any} size={20} color="black" />
+      {data.icon && (
+        <DynamicIcon name={data.icon as any} size={20} color="black" />
+      )}
       <span>{data.title}</span>
     </NavLink>
   );

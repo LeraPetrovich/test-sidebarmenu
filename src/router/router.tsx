@@ -15,28 +15,135 @@ import {
   NotFoundPage,
 } from "../pages";
 
-//конфигурация доступных страниц
-
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       {
-        path: "",
+        index: true,
         element: <MainPage />,
+        handle: {
+          id: "main",
+          title: "Main",
+          icon: "house",
+        },
       },
-      { path: "trends", element: <TrendsPage /> },
-      { path: "tasks", element: <TasksPage /> },
-      { path: "tickets", element: <TicketsPage /> },
-      { path: "products", element: <ProductsPage /> },
-      { path: "orders", element: <OrdersPage /> },
-      { path: "supplies", element: <SuppliesPage /> },
-      { path: "list", element: <ListPage /> },
-      { path: "reviews", element: <ReviewsPage /> },
-      { path: "notification", element: <NotificationPage /> },
-      { path: "shop", element: <ShopPage /> },
-      { path: "*", element: <NotFoundPage /> },
+      {
+        path: "trends",
+        element: <TrendsPage />,
+        handle: {
+          id: "trends",
+          title: "Trends",
+          icon: "chart-column-decreasing",
+        },
+      },
+      {
+        path: "tasks",
+        element: <TasksPage />,
+        handle: {
+          id: "tasks",
+          title: "Tasks",
+          icon: "list-checks",
+        },
+      },
+      {
+        path: "tickets",
+        element: <TicketsPage />,
+        handle: {
+          id: "tickets",
+          title: "Tickets",
+          icon: "square-kanban",
+        },
+      },
+      {
+        path: "inventory",
+        handle: {
+          id: "inventory",
+          title: "Inventory",
+          icon: "squares-exclude",
+        },
+      },
+      {
+        path: "products",
+        element: <ProductsPage />,
+        handle: {
+          id: "products",
+          title: "Products",
+          parent: "inventory",
+        },
+      },
+      {
+        path: "orders",
+        element: <OrdersPage />,
+        handle: {
+          id: "orders",
+          title: "Orders",
+          parent: "inventory",
+        },
+      },
+      {
+        path: "supplies",
+        element: <SuppliesPage />,
+        handle: {
+          id: "supplies",
+          title: "Supplies",
+          parent: "inventory",
+        },
+      },
+      {
+        path: "clients",
+        element: <></>,
+        handle: {
+          id: "clients",
+          title: "Clients",
+          icon: "users",
+        },
+      },
+      {
+        path: "list",
+        element: <ListPage />,
+        handle: {
+          id: "list",
+          title: "List",
+          parent: "clients",
+        },
+      },
+      {
+        path: "reviews",
+        element: <ReviewsPage />,
+        handle: {
+          id: "reviews",
+          title: "Reviews",
+          parent: "clients",
+        },
+      },
+      {
+        path: "notification",
+        element: <NotificationPage />,
+        handle: {
+          id: "notification",
+          title: "Notification",
+          parent: "clients",
+        },
+      },
+      {
+        path: "shop",
+        element: <ShopPage />,
+        handle: {
+          id: "shop",
+          title: "Shop",
+          icon: "shopping-bag",
+        },
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+        handle: {
+          id: "notFound",
+          hidden: true,
+        },
+      },
     ],
   },
 ]);
