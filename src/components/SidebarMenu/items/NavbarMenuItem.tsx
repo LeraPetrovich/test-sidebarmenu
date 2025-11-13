@@ -1,5 +1,5 @@
 import { type FC, memo } from "react";
-import { useHelpPanelMenu } from "../../../contexts/HelpPanelContext";
+import { useHelpPanelMenu } from "../context/HelpPanelContext";
 import { DynamicIcon } from "lucide-react/dynamic";
 
 import type { MenuItemWithState } from "../../../types/types";

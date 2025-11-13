@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import type { MenuItemWithState } from "../types/types";
+import type { MenuItemWithState } from "../../../types/types";
 
 interface HelpPanelContextProps {
   isOpen: boolean;

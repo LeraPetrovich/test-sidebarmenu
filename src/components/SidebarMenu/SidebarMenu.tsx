@@ -1,9 +1,8 @@
 import { type FC, useState } from "react";
 import { useCheckPageSize } from "../../hooks/useCheckPageSize";
 
-import { HelpPanelContextProvider } from "../../contexts/HelpPanelContext";
-import { HelpMenu } from "../HelpMenu";
-import { SidebarMenuItem, NavBarMenu } from "./items";
+import { HelpPanelContextProvider } from "./context/HelpPanelContext";
+import { SidebarMenuItem, NavBarMenu, HelpMenu } from "./items";
 import { DynamicIcon } from "lucide-react/dynamic";
 import type { SidebarMenuProps } from "./types";
 

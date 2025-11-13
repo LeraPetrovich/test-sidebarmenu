@@ -1,9 +1,9 @@
 import { type FC, useEffect, useRef } from "react";
-import { useHelpPanelMenu } from "../../contexts/HelpPanelContext";
-import { SidebarMenuItem } from "../SidebarMenu/items";
+import { useHelpPanelMenu } from "../context/HelpPanelContext";
+import { SidebarMenuItem } from ".";
 import { DynamicIcon } from "lucide-react/dynamic";
 
-import type { MenuItemWithState } from "../../types/types";
+import type { MenuItemWithState } from "../../../types/types";
 
 //панель которая доступная везде и упаравляется через контекст из хука useHelpPanelMenu
 
