@@ -1,5 +1,6 @@
 import { type FC, useEffect, useRef, useMemo, memo } from "react";
 import { useHelpPanelMenu } from "../context/HelpPanelContext";
+import { useCheckPageSize } from "../../../hooks/useCheckPageSize";
 import { SidebarMenuItem } from ".";
 import { DynamicIcon } from "lucide-react/dynamic";
 import type { MenuItemWithState } from "../../../types/menu";
@@ -10,6 +11,13 @@ const MemoHelpMenu: FC<{ menuItems: MenuItemWithState[] }> = ({
   const { isOpen, closePanel, selectedItem, selectedTitle } =
     useHelpPanelMenu();
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const { isTrueWidth } = useCheckPageSize();
+
+  useEffect(() => {
+    if (isTrueWidth && isOpen) {
+      closePanel();
+    }
+  }, [isTrueWidth]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
