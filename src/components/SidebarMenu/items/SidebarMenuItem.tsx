@@ -1,4 +1,5 @@
 import { type FC, useState, memo } from "react";
+import { useSidebarMenuContext } from "../context/SidebarMenuContext";
 
 import { DynamicIcon } from "lucide-react/dynamic";
 
@@ -6,21 +7,11 @@ import type { SidebarMenuItemProps } from "./types";
 
 //использовала рекурсионную отрисовку items для воможности расширять компонент
 
-const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
-  data,
-  isOpen,
-  onItemClick,
-}) => {
+const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({ data, isOpen }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  //проверка или активе родитель по его дочерним если они есть
-  // const isActiveParent = useMemo(() => {
-  //   return (
-  //     !!data.children?.some((child) => location.pathname === child.path) ||
-  //     location.pathname === data.path
-  //   );
-  // }, [location.pathname, data]);
+  const { onItemClick } = useSidebarMenuContext();
 
   //динамически закрываем меню если в нем нет дочерних активных элементов
   // useEffect(() => {
@@ -72,12 +63,7 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
         {isOpenDropdown && isOpen && (
           <div className="ml-6 mt-1 flex flex-col gap-1">
             {data.children.map((child) => (
-              <SidebarMenuItem
-                onItemClick={onItemClick}
-                isOpen={isOpen}
-                key={child.path}
-                data={child}
-              />
+              <SidebarMenuItem isOpen={isOpen} key={child.path} data={child} />
             ))}
           </div>
         )}
@@ -91,12 +77,7 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
               {data.title}
             </div>
             {data.children.map((child) => (
-              <SidebarMenuItem
-                onItemClick={onItemClick}
-                key={child.path}
-                isOpen={true}
-                data={child}
-              />
+              <SidebarMenuItem key={child.path} isOpen={true} data={child} />
             ))}
           </div>
         )}

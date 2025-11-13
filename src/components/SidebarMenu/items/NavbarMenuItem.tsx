@@ -1,5 +1,7 @@
 import { type FC, memo } from "react";
 import { useHelpPanelMenu } from "../context/HelpPanelContext";
+import { useSidebarMenuContext } from "../context/SidebarMenuContext";
+
 import { DynamicIcon } from "lucide-react/dynamic";
 
 import type { MenuItemWithState } from "../../../types/types";
@@ -8,9 +10,9 @@ import type { MenuItemWithState } from "../../../types/types";
 
 const MemoNavBarMenu: FC<{
   data: MenuItemWithState;
-  onItemClick: (item: MenuItemWithState) => void;
-}> = ({ data, onItemClick }) => {
+}> = ({ data }) => {
   const { openPanel } = useHelpPanelMenu();
+  const { onItemClick } = useSidebarMenuContext();
 
   if (
     data.children !== null &&
