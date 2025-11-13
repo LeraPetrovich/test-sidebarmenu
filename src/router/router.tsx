@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
         handle: {
           id: "orders",
           title: "Orders",
-          parent: "inventory",
+          parent: "products",
         },
       },
       {
@@ -88,7 +88,34 @@ export const router = createBrowserRouter([
         handle: {
           id: "supplies",
           title: "Supplies",
-          parent: "inventory",
+          parent: "orders",
+        },
+      },
+      {
+        path: "test1",
+        element: <SuppliesPage />,
+        handle: {
+          id: "test1",
+          title: "test1",
+          parent: "orders",
+        },
+      },
+      {
+        path: "test2",
+        element: <SuppliesPage />,
+        handle: {
+          id: "test2",
+          title: "test2",
+          parent: "test1",
+        },
+      },
+      {
+        path: "test3",
+        element: <SuppliesPage />,
+        handle: {
+          id: "test3",
+          title: "test3",
+          parent: "test1",
         },
       },
       {

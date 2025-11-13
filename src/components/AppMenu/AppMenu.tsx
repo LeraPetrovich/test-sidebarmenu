@@ -3,6 +3,10 @@ import { router } from "../../router/router";
 import { buildMenuTreeData } from "./utils/buildMenuTreeData";
 import { cloneMenuDataWithState } from "../../utils/cloneMenuDataWithState";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  checkIsActiveItem,
+  checkIsActiveToggleItem,
+} from "./utils/checkActiveChildFunctions";
 
 import { SidebarMenu } from "../SidebarMenu";
 
@@ -23,9 +27,7 @@ export const AppMenu: FC = () => {
       items: MenuItemWithState[]
     ): MenuItemWithState[] => {
       return items.map((item) => {
-        const isActive =
-          item.path === location.pathname ||
-          item.children?.some((child) => child.path === location.pathname);
+        const isActive = checkIsActiveItem(item, location.pathname);
         return {
           ...item,
           isActive: !!isActive,
@@ -39,15 +41,11 @@ export const AppMenu: FC = () => {
   const handleItemClick = (clickedItem: MenuItemWithState) => {
     const toggleItem = (items: MenuItemWithState[]): MenuItemWithState[] => {
       return items.map((item) => {
-        const hasActiveChild = item.children?.some(
-          (child) => child.id === clickedItem.id || child.isActive
-        );
-
-        const isCurrent = item.id === clickedItem.id;
+        const isActive = checkIsActiveToggleItem(item, clickedItem.id);
 
         return {
           ...item,
-          isActive: isCurrent || !!hasActiveChild,
+          isActive,
           children: item.children ? toggleItem(item.children) : [],
         };
       });

@@ -1,9 +1,14 @@
-import { type FC, useState, memo } from "react";
+import { type FC, useState, memo, useEffect } from "react";
 import { useSidebarMenuContext } from "../context/SidebarMenuContext";
+import {
+  findFirstChildWithoutChildren,
+  hasActiveDescendant,
+} from "./utils/utilsSidebarMenuFunctions";
 
 import { DynamicIcon } from "lucide-react/dynamic";
 
 import type { SidebarMenuItemProps } from "./types";
+import type { MenuItemWithState } from "../../../types/menu";
 
 //использовала рекурсионную отрисовку items для воможности расширять компонент
 
@@ -14,13 +19,30 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({ data, isOpen }) => {
   const { onItemClick } = useSidebarMenuContext();
 
   //динамически закрываем меню если в нем нет дочерних активных элементов
-  // useEffect(() => {
-  //   if (!isActiveParent && isOpenDropdown && isOpen) {
-  //     setIsOpenDropdown(false);
-  //   }
-  // }, [isActiveParent, isOpen]);
+  useEffect(() => {
+    if (!hasActiveDescendant(data) && isOpenDropdown && isOpen) {
+      setIsOpenDropdown(false);
+    }
+  }, [data, isOpen, isOpenDropdown]);
+
+  useEffect(() => {
+    if (hasActiveDescendant(data) && !isOpenDropdown && isOpen) {
+      setIsOpenDropdown(true);
+    }
+  }, [data, isOpen, isOpenDropdown]);
 
   //отрисовала два состояния чтобы правильно использвоать NavLink
+
+  const handleOpenDropdown = (children?: MenuItemWithState[]) => {
+    if (!isOpen) return;
+    // setIsOpenDropdown((prev) => !prev);
+
+    if (!isOpenDropdown && children?.length) {
+      const firstLeaf = findFirstChildWithoutChildren(children);
+      if (firstLeaf) onItemClick(firstLeaf);
+    }
+  };
+
   if (data.children?.length) {
     return (
       <div
@@ -30,7 +52,7 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({ data, isOpen }) => {
       >
         <button
           onClick={() => {
-            if (isOpen) setIsOpenDropdown((open) => !open);
+            handleOpenDropdown(data.children);
           }}
           className={[
             "cursor-pointer flex items-center rounded-lg transition-colors w-full text-left",
@@ -90,7 +112,7 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({ data, isOpen }) => {
     <div
       onClick={() => onItemClick(data)}
       className={[
-        "relative flex items-center  rounded-lg transition-colors w-full text-left",
+        "cursor-pointer relative flex items-center  rounded-lg transition-colors w-full text-left",
         data.isActive
           ? "bg-sky-100 text-sky-700 [&_svg]:stroke-sky-700"
           : "hover:bg-zinc-200 text-black",
