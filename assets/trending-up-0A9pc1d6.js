@@ -1,1 +1,0 @@
-import{c as t}from"./createLucideIcon-D5QjKJNS.js";import"./index-BFcM9PhW.js";const e=[["path",{d:"M16 7h6v6",key:"box55l"}],["path",{d:"m22 7-8.5 8.5-5-5L2 17",key:"1t1m79"}]],c=t("trending-up",e);export{e as __iconNode,c as default};

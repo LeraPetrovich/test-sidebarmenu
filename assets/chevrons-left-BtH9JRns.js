@@ -1,1 +1,0 @@
-import{c as e}from"./createLucideIcon-D5QjKJNS.js";import"./index-BFcM9PhW.js";const t=[["path",{d:"m11 17-5-5 5-5",key:"13zhaf"}],["path",{d:"m18 17-5-5 5-5",key:"h8a8et"}]],c=e("chevrons-left",t);export{t as __iconNode,c as default};

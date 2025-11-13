@@ -1,1 +1,0 @@
-import{c as e}from"./createLucideIcon-D5QjKJNS.js";import"./index-BFcM9PhW.js";const t=[["rect",{width:"18",height:"18",x:"3",y:"3",rx:"2",key:"afitv7"}],["path",{d:"m14 16-4-4 4-4",key:"ojs7w8"}]],c=e("square-chevron-left",t);export{t as __iconNode,c as default};
