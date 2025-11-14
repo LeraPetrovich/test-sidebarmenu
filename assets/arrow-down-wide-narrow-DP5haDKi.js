@@ -1,1 +1,0 @@
-import{c as o}from"./createLucideIcon-C8Py6Bw4.js";import"./index-GIN_rlyW.js";const e=[["path",{d:"m3 16 4 4 4-4",key:"1co6wj"}],["path",{d:"M7 20V4",key:"1yoxec"}],["path",{d:"M11 4h10",key:"1w87gc"}],["path",{d:"M11 8h7",key:"djye34"}],["path",{d:"M11 12h4",key:"q8tih4"}]],a=o("arrow-down-wide-narrow",e);export{e as __iconNode,a as default};

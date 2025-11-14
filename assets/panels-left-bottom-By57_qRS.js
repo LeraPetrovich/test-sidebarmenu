@@ -1,1 +1,0 @@
-import{c as t}from"./createLucideIcon-C8Py6Bw4.js";import"./index-GIN_rlyW.js";const e=[["rect",{width:"18",height:"18",x:"3",y:"3",rx:"2",key:"afitv7"}],["path",{d:"M9 3v18",key:"fh3hqa"}],["path",{d:"M9 15h12",key:"5ijen5"}]],c=t("panels-left-bottom",e);export{e as __iconNode,c as default};
