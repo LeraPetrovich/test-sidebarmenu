@@ -5,4 +5,9 @@ interface SidebarMenuItemProps {
   isOpenSidebarMenu: boolean;
 }
 
-export type { SidebarMenuItemProps };
+interface TooltipItemProps {
+  data: MenuItemWithState;
+  onTooltipItemClick: (item: MenuItemWithState) => void;
+}
+
+export type { SidebarMenuItemProps, TooltipItemProps };

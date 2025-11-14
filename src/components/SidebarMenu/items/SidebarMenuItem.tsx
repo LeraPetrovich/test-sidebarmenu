@@ -7,6 +7,7 @@ import {
 } from "./utils/utilsSidebarMenuFunctions";
 
 import { DynamicIcon } from "lucide-react/dynamic";
+import { TooltipItem } from "./TooltipItem";
 
 import type { SidebarMenuItemProps } from "./types";
 import type { MenuItemWithState } from "../../../types/menu";
@@ -30,13 +31,12 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
     }
   }, [data, isOpenSidebarMenu, isOpenDropdown]);
 
+  //динамически открываем  меню если в нем есть дочерних активных элементов
   useEffect(() => {
     if (hasActiveDescendant(data) && !isOpenDropdown && isOpenSidebarMenu) {
       setIsOpenDropdown(true);
     }
   }, [data, isOpenSidebarMenu, isOpenDropdown]);
-
-  //отрисовала два состояния чтобы правильно использвоать NavLink
 
   const handleOpenDropdown = (children?: MenuItemWithState[]) => {
     if (!isOpenSidebarMenu) return;
@@ -59,6 +59,13 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
   const clickDefaultItem = (data: MenuItemWithState) => {
     if (isOpen) {
       closePanel();
+    }
+    onItemClick(data);
+  };
+
+  const clickTooltipItem = (data: MenuItemWithState) => {
+    if (isHovered) {
+      setIsHovered(false);
     }
     onItemClick(data);
   };
@@ -118,19 +125,15 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
           </div>
         )}
         {!isOpenSidebarMenu && isHovered && (
-          <div
-            className="flex flex-col gap-1 z-[999] absolute top-0 left-full ml-0 bg-white shadow-lg rounded-lg border border-slate-200 p-2 z-50 min-w-[180px]"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <div className="flex flex-col gap-1 z-[999] absolute top-0 left-full ml-0 bg-white shadow-lg rounded-lg border border-slate-200 p-2 z-50 min-w-[180px]">
             <div className="font-semibold text-gray-500 px-2 mb-1">
               {data.title}
             </div>
-            {data.children.map((child) => (
-              <SidebarMenuItem
-                key={child.path}
-                isOpenSidebarMenu={true}
+            {data.children.map((child, index) => (
+              <TooltipItem
+                onTooltipItemClick={clickTooltipItem}
                 data={child}
+                key={`${index}_${child.path}`}
               />
             ))}
           </div>
@@ -162,7 +165,10 @@ const MemoSidebarMenuItem: FC<SidebarMenuItemProps> = ({
       )}
       {isOpenSidebarMenu && <span>{data.title}</span>}
       {!isOpenSidebarMenu && isHovered && (
-        <div className="absolute font-bold p-1 bg-sky-700 text-white text-sm max-w-20 rounded-md z-[999] absolute top-0 left-full ml-0 mb-2">
+        <div
+          onClick={() => setIsHovered(false)}
+          className="absolute font-bold p-1 bg-sky-700 text-white text-sm max-w-20 rounded-md z-[999] top-0 left-full ml-0 mb-2"
+        >
           {data.title}
         </div>
       )}
